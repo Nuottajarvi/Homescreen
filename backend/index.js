@@ -23,6 +23,8 @@ app.get('/api/update', async (req, res) => {
     res.status(200).send({busDepartures, weatherData});
 });
 
+app.use(express.static('dist'));
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
