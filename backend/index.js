@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 
 let busDepartures = await getBusDepartures();
 let weatherData = await getWeather();
-console.log("WEATHER DATA ", weatherData);
 
 setInterval(async () => {
     busDepartures = await getBusDepartures();
