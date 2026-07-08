@@ -4,7 +4,7 @@ import { formatTime } from './utils';
 
 export default function WeatherView({ weather }) {
 
-    if(!weather || Object.keys(weather).length === 0) {
+    if(!weather || !weather.weatherData || Object.keys(weather).length === 0) {
         return;
     } else {
         console.log("WEATHER ", weather);

@@ -4,19 +4,48 @@ import { formatTime } from '../util.js';
 dotenv.config();
 
 const dayNames = ["su", "ma", "ti", "ke", "to", "pe", "la"];
+const requiredEnvVars = ["WEATHER_LAT", "WEATHER_LON", "WEATHER_API_KEY", "USER_AGENT"];
+
+function env(name) {
+    const value = process.env[name]?.trim().replace(/^['"]|['"]$/g, "");
+
+    if(!value) {
+        throw new Error(`Missing environment variable: ${name}`);
+    }
+
+    return value;
+}
+
+function getWeatherConfig() {
+    requiredEnvVars.forEach(env);
+
+    return {
+        lat: env("WEATHER_LAT"),
+        lon: env("WEATHER_LON"),
+        apiKey: env("WEATHER_API_KEY"),
+        userAgent: env("USER_AGENT"),
+    };
+}
 
 export async function getWeather() {
     try {
-        const openWeatherData = await axios.get(`
-            https://api.openweathermap.org/data/3.0/onecall?lat=${process.env.WEATHER_LAT}&lon=${process.env.WEATHER_LON}&exclude=minutely&appid=${process.env.WEATHER_API_KEY}
-        `);
+        const { lat, lon, apiKey, userAgent } = getWeatherConfig();
+        const openWeatherUrl = new URL("https://api.openweathermap.org/data/3.0/onecall");
+        openWeatherUrl.searchParams.set("lat", lat);
+        openWeatherUrl.searchParams.set("lon", lon);
+        openWeatherUrl.searchParams.set("exclude", "minutely");
+        openWeatherUrl.searchParams.set("appid", apiKey);
 
-        const weatherDataNorway = await axios.get(`
-            https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${process.env.WEATHER_LAT}&lon=${process.env.WEATHER_LON}
-        `,
+        const norwayWeatherUrl = new URL("https://api.met.no/weatherapi/locationforecast/2.0/compact");
+        norwayWeatherUrl.searchParams.set("lat", lat);
+        norwayWeatherUrl.searchParams.set("lon", lon);
+
+        const openWeatherData = await axios.get(openWeatherUrl.toString());
+
+        const weatherDataNorway = await axios.get(norwayWeatherUrl.toString(),
         {
             headers: {
-                "User-Agent": process.env.USER_AGENT
+                "User-Agent": userAgent
             }
         });
         const data = {};
@@ -79,6 +108,10 @@ export async function getWeather() {
 
 
     } catch (error) {
-        console.error(error);
+        const status = error.response?.status;
+        const body = error.response?.data;
+        const message = status ? `Weather update failed with HTTP ${status}` : error.message;
+        console.error(message, body ?? "");
+        return null;
     }
 }

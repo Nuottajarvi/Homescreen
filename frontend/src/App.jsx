@@ -8,6 +8,7 @@ import ClockView from './ClockView';
 function App() {
   const [buses, setBuses] = useState([]);
   const [weather, setWeather] = useState({});
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,16 +24,47 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+    };
+  }, []);
+
+  const toggleFullscreen = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await document.documentElement.requestFullscreen();
+    }
+  };
+
   return (
-    <div className="container">
-      <div>
-        <BusView buses={buses} />
+    <>
+      <button
+        className="fullscreen-button"
+        onClick={toggleFullscreen}
+        type="button"
+        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+        title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+      >
+        {isFullscreen ? "X" : "[]"}
+      </button>
+      <div className="container">
+        <div>
+          <BusView buses={buses} />
+        </div>
+        <div className="side-panel">
+          <ClockView/>
+          <WeatherView weather={weather} />
+        </div>
       </div>
-      <div style={{marginLeft: "5em"}}>
-        <ClockView/>
-        <WeatherView weather={weather} />
-      </div>
-    </div>
+    </>
   )
 }
 
