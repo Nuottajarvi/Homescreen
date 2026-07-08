@@ -1,0 +1,138 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.icon {
+  height: 3em;
+  margin: 0 0.5em;
+}
+
+.icon-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-text p {
+  font-weight: 500;
+  font-size: 1.75em;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buscard {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+
+.buscard:nth-child(even) {
+  background-color: #000;
+  color: #fff;
+}
+
+.north {
+  background-color: #ff9f9f !important;
+}
+
+.timetil {
+  font-size: 1.5rem;
+  font-weight: 500;
+  justify-content: center;
+  align-self: center;
+  flex: 1;
+  padding: 1em;
+}
+
+.businfo {
+  justify-content: center;
+  align-items: center;
+  flex: 3;
+  padding: 1em;
+}
+
+.businfo h2 {
+  margin-bottom: 0;
+}
+
+.via {
+  margin: 0;
+  font-size: 1em;
+  font-style: italic;
+}
+
+.timetilnum {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.busclock {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin: 0.5em;
+}
+
+.delay {
+  padding-left: 0.25em;
+  color: inherit;
+}
+
+.weather-view {
+  width: 500px;
+  display: flex;
+  flex-flow: row wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.weather-box {
+  margin: 0.5rem;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.weather-box:first-child {
+  width: 100% !important;
+  margin-left: 36px;
+  margin-right: 36px;
+}
+
+.weather-box p {
+  margin: 0;
+}
+
+.clock {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0.5em;
+  background-color: #000;
+  color: #fff;
+  padding: 0.5em;
+  border-radius: 16px;
+}
+
+.clock h1 {
+  margin: 0;
+  font-size: 3.5rem;
+}
+.clock h3 {
+  margin: 0;
+}
