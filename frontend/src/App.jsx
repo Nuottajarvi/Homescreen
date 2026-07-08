@@ -46,21 +46,12 @@ function App() {
 
   return (
     <>
-      <button
-        className="fullscreen-button"
-        onClick={toggleFullscreen}
-        type="button"
-        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-        title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-      >
-        {isFullscreen ? "X" : "[]"}
-      </button>
       <div className="container">
-        <div>
+        <div className="bus-panel">
           <BusView buses={buses} />
         </div>
         <div className="side-panel">
-          <ClockView/>
+          <ClockView isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen}/>
           <WeatherView weather={weather} />
         </div>
       </div>

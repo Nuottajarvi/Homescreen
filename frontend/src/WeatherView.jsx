@@ -11,12 +11,10 @@ export default function WeatherView({ weather }) {
     }
 
     return (
-        <div>
-            <div>
+        <div className="weather-panel">
                 <div className="weather-view">
                     {
                         weather.weatherData.map(weather => {
-                            console.log("WEATHER WEATHER ", weather.weather);
                             return (
                                 <div key={weather.time} className="icon-text weather-box">
                                     <p>{weather.time}</p>
@@ -28,11 +26,10 @@ export default function WeatherView({ weather }) {
                     }
 
                 </div>
-                <div className="icon-text">
-                    <img src={sunrise} className="icon" style={{height: "80px"}}/>
+                <div className="icon-text sun-times">
+                    <img src={sunrise} className="icon"/>
                     <p>{formatTime(weather.sunrise)} - {formatTime(weather.sunset)}</p>
                 </div>
-            </div>
         </div>
     );
 }
